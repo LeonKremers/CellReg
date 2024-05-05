@@ -45,12 +45,14 @@ for n=1:number_of_sessions
     
     all_projections_partial{n}=zeros(size(this_spatial_footprint,2),size(this_spatial_footprint,3),3);
     mutual_projections_partial{n}=zeros(size(this_spatial_footprint,2),size(this_spatial_footprint,3),3);
-    all_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
-    all_projections_partial{n}(:,:,1)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1));
-    all_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1))+squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
-    all_projections_partial{n}(:,:,3)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1));
-    mutual_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
-    all_projections_partial{n}(all_projections_partial{n}>1)=1;
+    try
+        all_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
+        all_projections_partial{n}(:,:,1)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1));
+        all_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1))+squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
+        all_projections_partial{n}(:,:,3)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(other_cells{n},n),:,:),1));
+        mutual_projections_partial{n}(:,:,2)=squeeze(sum(normalized_spatial_footprints(cell_to_index_map(cells_in_all_days,n),:,:),1));
+        all_projections_partial{n}(all_projections_partial{n}>1)=1;
+    end
 end
 
 subx=4;

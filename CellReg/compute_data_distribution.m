@@ -46,7 +46,7 @@ neighbor_count=0;
 NN_count=0;
 NNN_count=0;
 disp('Calculating the distributions of cell-pair similarities:')
-display_progress_bar('Terminating previous progress bars',true)    
+display_progress_bar('Terminating previous progress bars',true)   
 for n=1:number_of_sessions 
     display_progress_bar(['Calculating spatial correlations and centroid distances for session #' num2str(n) ' - '],false)
     
@@ -75,8 +75,18 @@ for n=1:number_of_sessions
             display_progress_bar(100*(cell_counter)/(total_cells),false)
             new_spatial_footprint=squeeze(new_spatial_footprints(k,:,:));
             centroid=repmat(new_centroids(k,:),size(this_session_centroids,1),1);
-            distance_vec=sqrt(sum((centroid-this_session_centroids).^2,2));
-            diff_temp=centroid-this_session_centroids;
+            try
+                distance_vec=sqrt(sum((centroid-this_session_centroids).^2,2));
+            catch
+                distance_vec=-1;
+            end
+            %distance_vec=sqrt(sum((centroid-this_session_centroids).^2,2));
+            try
+                diff_temp=centroid-this_session_centroids;
+            catch
+                diff_temp=[-1,-1];
+            end
+            %diff_temp=centroid-this_session_centroids;
             spatial_footprints_to_check=find(distance_vec<maximal_distance);
             distance_vec_x=diff_temp(spatial_footprints_to_check,1);
             distance_vec_y=diff_temp(spatial_footprints_to_check,2);
@@ -85,7 +95,12 @@ for n=1:number_of_sessions
                 corr_vec=zeros(1,length(spatial_footprints_to_check));
                 num_empty_spatial_footprints=0;
                 for l=1:length(spatial_footprints_to_check)
-                    suspected_spatial_footprint=squeeze(this_session_spatial_footprints(spatial_footprints_to_check(l),:,:));
+                    try
+                        suspected_spatial_footprint=squeeze(this_session_spatial_footprints(spatial_footprints_to_check(l),:,:));
+                    catch
+                        suspected_spatial_footprint=zeros(size(new_spatial_footprint));
+                    end
+                    %suspected_spatial_footprint=squeeze(this_session_spatial_footprints(spatial_footprints_to_check(l),:,:));
                     if sum(sum(suspected_spatial_footprint))==0 || sum(sum(new_spatial_footprint))==0
                         num_empty_spatial_footprints=num_empty_spatial_footprints+1;
                     else % compute spatial correlation
@@ -120,6 +135,7 @@ for n=1:number_of_sessions
     end
     display_progress_bar(' done',false);
 end
+
 
 % deleting empty elements in the vectors:
 neighbors_spatial_correlations(neighbor_count+1:end)=[];

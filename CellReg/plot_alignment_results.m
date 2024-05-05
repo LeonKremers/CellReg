@@ -85,7 +85,12 @@ legend('boxoff')
 subplot(2,2,4)
 for n=1:number_of_sessions
     centroids=centroid_locations_corrected{n};
-    h=scatter(centroids(:,1),adjusted_y_size-centroids(:,2),15);
+    try
+        h=scatter(centroids(:,1),adjusted_y_size-centroids(:,2),15);
+    catch
+        h=scatter(centroid_locations{n}(:,1),adjusted_y_size-centroid_locations{n}(:,2),15);
+    end
+    %h=scatter(centroids(:,1),adjusted_y_size-centroids(:,2),15);
     set(h,'MarkerFaceColor',color(n,:));
     hold on
 end

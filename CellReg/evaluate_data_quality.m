@@ -31,7 +31,21 @@ if number_of_sessions>2
     for n=1:number_of_sessions
         all_projections_correlations(n,n)=1;
         for k=n+1:number_of_sessions
-            all_projections_correlations(n,k)=corr2(footprints_projections_corrected{n},footprints_projections_corrected{k});            
+            %temp_correlations = xcorr2(centroid_projections_corrected{n},centroid_projections_corrected{k});
+            %if size(temp_correlations,1) == 0 && size(temp_correlations,2) == 0
+            %    all_projections_correlations(n,k) = 0;
+            %else
+            %    all_projections_correlations(n,k) = temp_correlations;
+            %end
+            try
+                all_projections_correlations(n,k)=corr2(footprints_projections_corrected{n},footprints_projections_corrected{k}); 
+            catch
+                try
+                    all_projections_correlations(n,k)=xcorr2(footprints_projections_corrected{n},footprints_projections_corrected{k}); 
+                catch
+                    all_projections_correlations(n,k)=0;
+                end
+            end   
             all_projections_correlations(k,n)=all_projections_correlations(n,k);
         end
     end

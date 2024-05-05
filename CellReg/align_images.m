@@ -411,13 +411,10 @@ else
         else % if no appropriate rotations/translations were found
             if strcmp(alignment_type,'Translations and Rotations') % rotating cells
                 warning(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - try using non-rigid transformation'])
-                warndlg(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - try using non-rigid transformation'])
             elseif strcmp(alignment_type,'Translations') % rotating cells
                 warning(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - try using rotations'])
-                warndlg(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - try using rotations'])
             else
                 warning(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - could not align session'])
-                warndlg(['Session ' num2str(registration_order(n)) ' does not resemble the reference session - could not align session'])
             end
             bad_algn_sessions = [bad_algn_sessions, registration_order(n)];
         end
