@@ -123,7 +123,9 @@ p_same_given_spatial_correlation(indexes_to_smooth)=p_same_given_spatial_correla
 
 % finding the intersection between same cells and different cells:
 index_range_of_intersection=find(spatial_correlations_model_same_cells>minimal_p_same_threshold*max(spatial_correlations_model_same_cells));
-index_range_of_intersection(end)=[];
+if ~isempty(intersect(index_range_of_intersection,number_of_bins))
+    index_range_of_intersection=setdiff(index_range_of_intersection,number_of_bins);
+end
 if ~isnan(p)
     [~,index_of_intersection]=min(abs(PIsame*spatial_correlations_model_same_cells(index_range_of_intersection)-(1-PIsame)*spatial_correlations_model_different_cells(index_range_of_intersection)));
 else
