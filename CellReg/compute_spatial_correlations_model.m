@@ -94,7 +94,7 @@ spatial_correlations_model_different_cells=spatial_correlations_model_different_
 sigmoid_function=@(x,ac)1./(1+exp(-ac(1)*(x-ac(2)))); % defining the sigmoid function - (sigmf requires Fuzzy Logic Toolbox)
 smoothing_func=sigmoid_function(spatial_correlations_centers,[20 min(spatial_correlations_centers)+0.5]);
 spatial_correlations_model_same_cells=spatial_correlations_model_same_cells.*smoothing_func;
-spatial_correlations_model_same_cells(1:round(number_of_bins/10:end))=0;
+spatial_correlations_model_same_cells(1:round(number_of_bins/10))=0;
 
 % calculating the weighted sum:
 if ~isnan(p)
@@ -123,7 +123,9 @@ p_same_given_spatial_correlation(indexes_to_smooth)=p_same_given_spatial_correla
 
 % finding the intersection between same cells and different cells:
 index_range_of_intersection=find(spatial_correlations_model_same_cells>minimal_p_same_threshold*max(spatial_correlations_model_same_cells));
-index_range_of_intersection(end)=[];
+if ~isempty(intersect(index_range_of_intersection,number_of_bins))
+    index_range_of_intersection=setdiff(index_range_of_intersection,number_of_bins);
+end
 if ~isnan(p)
     [~,index_of_intersection]=min(abs(PIsame*spatial_correlations_model_same_cells(index_range_of_intersection)-(1-PIsame)*spatial_correlations_model_different_cells(index_range_of_intersection)));
 else
