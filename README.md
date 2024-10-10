@@ -4,6 +4,13 @@ in Ca2+ imaging data. The package includes a GUI that supports the entire regist
 
 For more information contact lironsheintuch@gmail.com or join our [slack channel](https://cellreg.slack.com).
 
+## Adapted for use on Linux based server
+In general CellReg is left the same, however this adapation is optimized to run without GUI on our Linux based server. 
+In our implementation Cellreg runs via a single matlab script (see Leon_CellReg.m) which is called from within a python jupyter botebook.
+For performance optimization and asthetics loading bars which are not correctly rendered in Jupyter output have been removed.
+
+Leon Kremers (2024)
+
 ## Setting up the repository
 We encourage the use of official versions (e.g., v1.5.9) for easier debugging processes. Switch to the releases tab on GitHub and checkout the latest version.
 
