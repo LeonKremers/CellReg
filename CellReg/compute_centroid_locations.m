@@ -15,13 +15,12 @@ gaussian_radius=round(2*normalized_typical_cell_size); % for estimation of centr
 
 number_of_sessions=size(spatial_footprints,2);
 centroid_locations=cell(1,number_of_sessions);
-disp('Calculating centroid locations:');
-display_progress_bar('Terminating previous progress bars',true)    
+disp('Calculating centroid locations:');  
 for n=1:number_of_sessions
     if number_of_sessions>1
-        display_progress_bar(['Calculating centroid locations for session #' num2str(n) ' - '],false)
+        disp(['Calculating centroid locations for session #' num2str(n) ' - '])
     else
-        display_progress_bar('Calculating centroid locations for this session - ',false)
+        disp('Calculating centroid locations for this session - ')
     end
     this_session_footprint_info=get_spatial_footprints(spatial_footprints{n});
     this_session_spatial_footprints = this_session_footprint_info.load_footprints;
@@ -29,7 +28,6 @@ for n=1:number_of_sessions
     num_spatial_footprints=this_session_footprint_info.size(1);
     centroid_locations{n}=zeros(num_spatial_footprints,2);
     for k=1:num_spatial_footprints
-        display_progress_bar(100*(k)/(num_spatial_footprints),false)
         temp_spatial_footprint=squeeze(this_session_spatial_footprints(k,:,:));
 
         % calculating x and y projections of the spatial footprints for the
@@ -67,7 +65,6 @@ for n=1:number_of_sessions
         centroid_y=max_y_ind+centroid_y_temp;
         centroid_locations{n}(k,:)=[centroid_x,centroid_y];
     end
-    display_progress_bar(' done',false);
 end
 
 end

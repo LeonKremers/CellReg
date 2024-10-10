@@ -24,8 +24,7 @@ end
  
 disp('Calculating spatial footprints projections:')
 for n=1:number_of_sessions
-    display_progress_bar('Terminating previous progress bars',true)    
-    display_progress_bar(['Calculating projections for session #' num2str(n) ' - '],false)
+    disp(['Calculating projections for session #' num2str(n) ' - '])
     
     this_session_spatial_footprints = get_spatial_footprints(spatial_footprints{n});
     this_session_spatial_footprints = this_session_spatial_footprints.load_footprints;
@@ -34,14 +33,12 @@ for n=1:number_of_sessions
     num_spatial_footprints=size(this_session_spatial_footprints,1);
     normalized_spatial_footprints=zeros(size(this_session_spatial_footprints));
     for k=1:num_spatial_footprints
-        display_progress_bar(100*(k)/(num_spatial_footprints),false)
         this_spatial_footprint=this_session_spatial_footprints(k,:,:);
         this_spatial_footprint(this_spatial_footprint<pixel_weight_threshold*max(max(this_spatial_footprint)))=0;
         if max(max(this_spatial_footprint))>0
             normalized_spatial_footprints(k,:,:)=this_spatial_footprint/max(max(this_spatial_footprint));
         end
     end
-    display_progress_bar(' done',false);
     
     all_projections_partial{n}=zeros(size(this_spatial_footprint,2),size(this_spatial_footprint,3),3);
     mutual_projections_partial{n}=zeros(size(this_spatial_footprint,2),size(this_spatial_footprint,3),3);

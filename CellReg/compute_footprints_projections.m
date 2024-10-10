@@ -14,8 +14,7 @@ number_of_sessions=size(spatial_footprints,2);
 footprints_projections=cell(1,number_of_sessions);
 disp('Calculating spatial footprints projections:')
 for n=1:number_of_sessions
-    display_progress_bar('Terminating previous progress bars',true)
-    display_progress_bar(['Calculating footprints projections for session #' num2str(n) ' - '],false)
+    disp(['Calculating footprints projections for session #' num2str(n) ' - '])
     
     this_session_spatial_footprints = get_spatial_footprints(spatial_footprints{n});
     this_session_spatial_footprints = this_session_spatial_footprints.load_footprints;
@@ -27,7 +26,6 @@ for n=1:number_of_sessions
     normalized_spatial_footprints(normalized_spatial_footprints<pixel_weight_threshold)=0;
 
     footprints_projections{n}=squeeze(sum(normalized_spatial_footprints,1,'omitnan'));
-    display_progress_bar(' done',false);
 end
 
 end

@@ -18,10 +18,9 @@ pixel_threshold=0; % to change pixels with low signal to zero (between 0-1)
     
 number_of_sessions=size(spatial_footprints,2);
 normalized_spatial_footprints=cell(1,number_of_sessions);
-disp('Normalizing spatial footprints:')
-display_progress_bar('Terminating previous progress bars',true)    
+disp('Normalizing spatial footprints:') 
 for n=1:number_of_sessions
-    display_progress_bar(['Normalizing spatial footprints for session #' num2str(n) ' - '],false)    
+    disp(['Normalizing spatial footprints for session #' num2str(n) ' - '])    
     footprint_dat = get_spatial_footprints(spatial_footprints{n});
     this_session_spatial_footprints = footprint_dat.load_footprints;
     this_session_spatial_footprints = this_session_spatial_footprints.footprints;
@@ -47,7 +46,6 @@ for n=1:number_of_sessions
     else
         normalized_spatial_footprints{n} = temp_spatial_footprint;
     end   
-    display_progress_bar(' done',false);
 end
 
 end

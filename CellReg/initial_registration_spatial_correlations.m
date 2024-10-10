@@ -50,10 +50,9 @@ assigned_count=0;
 non_assigned_count=0;
 num_candidates=0;
 disp('Registering cells:');
-disp('Initializing list with the cells from session #1');
-display_progress_bar('Terminating previous progress bars',true)    
+disp('Initializing list with the cells from session #1');   
 for n=2:number_of_sessions; % registering the rest of the sessions
-    display_progress_bar(['Registering cells in session #' num2str(n) ' - '],false)
+    disp(['Registering cells in session #' num2str(n) ' - '])
     if strmatch(class(spatial_footprints{1}),'char')
         new_spatial_footprints = get_spatial_footprints(spatial_footprints{n});
         new_spatial_footprints = new_spatial_footprints.load_footprints;
@@ -63,7 +62,6 @@ for n=2:number_of_sessions; % registering the rest of the sessions
     end
     new_centroids=centroid_locations{n};    
     for k=1:size(new_spatial_footprints,1) % for each cell
-        display_progress_bar(100*(k)/size(new_spatial_footprints,1),false)
         is_assigned=0;
         new_spatial_footprint=squeeze(new_spatial_footprints(k,:,:));
         centroid=repmat(new_centroids(k,:),size(registered_centroid_locations,1),1);
@@ -177,7 +175,6 @@ for n=2:number_of_sessions; % registering the rest of the sessions
             spatial_correlation_map(initial_number_of_cells+count,:)=zeros(1,number_of_sessions);
         end
     end
-    display_progress_bar(' done',false)
 end
 
 registered_cells_spatial_correlations(assigned_count+1:end)=[];

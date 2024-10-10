@@ -46,9 +46,8 @@ neighbor_count=0;
 NN_count=0;
 NNN_count=0;
 disp('Calculating the distributions of cell-pair similarities:')
-display_progress_bar('Terminating previous progress bars',true)   
 for n=1:number_of_sessions 
-    display_progress_bar(['Calculating spatial correlations and centroid distances for session #' num2str(n) ' - '],false)
+    disp(['Calculating spatial correlations and centroid distances for session #' num2str(n) ' - '])
     
     new_spatial_footprints = get_spatial_footprints(spatial_footprints{n});
     new_spatial_footprints = new_spatial_footprints.load_footprints;
@@ -72,7 +71,6 @@ for n=1:number_of_sessions
         this_session_spatial_footprints = this_session_spatial_footprints.footprints;
         
         for k=1:number_of_cells % for each cell
-            display_progress_bar(100*(cell_counter)/(total_cells),false)
             new_spatial_footprint=squeeze(new_spatial_footprints(k,:,:));
             centroid=repmat(new_centroids(k,:),size(this_session_centroids,1),1);
             try
@@ -133,7 +131,6 @@ for n=1:number_of_sessions
             cell_counter = cell_counter + 1;
         end
     end
-    display_progress_bar(' done',false);
 end
 
 

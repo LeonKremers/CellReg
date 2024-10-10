@@ -45,9 +45,8 @@ changes_count(1)=-1;
 
 % Finding the optimal clustering with an iterative process:
 disp('Clustering cells:');
-display_progress_bar('Terminating previous progress bars',true)    
 while (changes_count(iteration)>num_changes_thresh || changes_count(iteration)==-1) && (iteration)<maximal_number_of_iterations    
-    display_progress_bar(['Performing clustering (iteration #' num2str(iteration) ') - '],false)
+    disp(['Performing clustering (iteration #' num2str(iteration) ') - '])
     
     % Finding the center of mass of all clusters:
     iteration=iteration+1;
@@ -305,7 +304,6 @@ while (changes_count(iteration)>num_changes_thresh || changes_count(iteration)==
         end
     end
     delete_count(iteration)=delete_count(iteration)+temp_delete_count;
-    display_progress_bar(' done',false)
 end
 
 % Calculating the final cell scores:
